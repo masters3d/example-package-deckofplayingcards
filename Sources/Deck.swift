@@ -1,34 +1,36 @@
 /*
  This source file is part of the Swift.org open source project
-
- Copyright 2015 Apple Inc. and the Swift project authors
+ 
+ Copyright (c) 2014 - 2016 Apple Inc. and the Swift project authors
  Licensed under Apache License v2.0 with Runtime Library Exception
-
+ 
  See http://swift.org/LICENSE.txt for license information
- See http://swift.org/CONTRIBUTORS.txt for Swift project authors
-*/
+ See http://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+ */
+
 
 import FisherYates
 import PlayingCard
 
+
 public struct Deck {
-    private var cards: [PlayingCard]
+    private var cards: [Card]
 
     public static func standard52CardDeck() -> Deck {
-        let suits: [Suit] = [.Spades, .Hearts, .Diamonds, .Clubs]
-        let ranks: [Rank] = [.Ace, .Two, .Three, .Four, .Five, .Six, .Seven, .Eight, .Nine, .Ten, .Jack, .Queen, .King]
+        let suits: [Suit] = [.spades, .hearts, .diamonds, .clubs]
+        let ranks: [Rank] = [.two, .three, .four, .five, .six, .seven, .eight, .nine, .ten, .jack, .queen, .king, .ace]
 
-        var cards: [PlayingCard] = []
+        var cards: [Card] = []
         for suit in suits {
             for rank in ranks {
-                cards.append(PlayingCard(rank: rank, suit: suit))
+                cards.append(Card(rank: rank, suit: suit))
             }
         }
 
         return Deck(cards)
     }
 
-    public init(_ cards: [PlayingCard]) {
+    public init(_ cards: [Card]) {
         self.cards = cards
     }
 
@@ -36,7 +38,7 @@ public struct Deck {
         cards.shuffleInPlace()
     }
 
-    public mutating func deal() -> PlayingCard? {
+    public mutating func deal() -> Card? {
         guard !cards.isEmpty else { return nil }
 
         return cards.removeLast()
@@ -46,7 +48,7 @@ public struct Deck {
 // MARK: - ArrayLiteralConvertible
 
 extension Deck : ArrayLiteralConvertible {
-    public init(arrayLiteral elements: PlayingCard...) {
+    public init(arrayLiteral elements: Card...) {
         self.init(elements)
     }
 }
